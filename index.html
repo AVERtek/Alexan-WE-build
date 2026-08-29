@@ -1,3 +1,6 @@
+Here is the complete HTML document with all references to the `record project` button, its commented-out HTML, and the `openRecordingTab()` JavaScript function completely removed:
+
+```html
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -11,7 +14,7 @@
         gtag('js', new Date());
         gtag('config', '0-0000000000');
     </script>
-<!--========================================================= -->
+<!--=========================================================-->
     <!--REDIRECT TOGGLE: REMOVE "/*" ABOVE AND "*/" BELOW TO ACTIVATE -->
     <!--<script>
         window.location.replace("https://alexanwestend.com/");
@@ -29,21 +32,22 @@
             height: 100vh; 
             text-align: center;
         }
-    </style> -->  
-<!--========================================================= -->
+    </style>
+-->  
+<!--=========================================================-->
     <style>
         /* Global & Button Styles */
         html, body { margin: 0; padding: 0; overflow-x: hidden; font-family: Google Sans, Noto, Roboto, Helvetica Neue, sans-serif; color: #ede9e5; background-color: #571b25; }
         .container { max-width: 600px; width: 100%; box-sizing: border-box; padding: 0 10px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
         .card { background-color: rgb(87, 27, 37); border: 2px solid rgb(87, 27, 37); padding: 10px; margin-bottom: 1em; display: flex; flex-direction: column; align-items: center; text-align: center; border-radius: 6px; overflow: hidden; width: 100%; box-sizing: border-box; }
-
+ 
         model-viewer { --progress-bar-color: #E69D6C; }
         
         .card h2 { margin: 0.25em 0; padding: 0; line-height: 1.2; }
         .card h2 p { margin: 0; padding: 0; }
-
+ 
         /* UNIFORM MAIN BUTTONS */
-        .main-button { 
+        .main-button {
             background-color: #ede9e5; 
             border-radius: 8px; 
             border: 2px solid #E69D6C; 
@@ -57,15 +61,19 @@
             box-sizing: border-box;
             padding: 0 10px;
         }
-
+ 
         .main-button img { height: 28px; margin-right: 8px; flex-shrink: 0; }
-
+ 
         @font-face { font-family: 'Classico'; src: url('fonts/Classico.otf') format('opentype'); }
         @font-face { font-family: 'ChronicleDeck-Semibold'; src: url('fonts/ChronicleDeck-Semibold.otf') format('opentype'); }
-
+ 
         a { color: #EDE9E5; text-decoration: none; font-weight: bold; }
         .hunt-header { font-family: 'Classico'; color: #E69D6C; text-align: center; width: 100%; margin: 20px 0; }
-        model-viewer#reveal { display: none; }
+        
+        /* Hide all model-viewers on page layout */
+        model-viewer#reveal, 
+        model-viewer#reveal-1bed, 
+        model-viewer#reveal-finley { display: none; }
     </style>
 </head>
 <body>
@@ -73,21 +81,49 @@
     <div class="card">
         <img src="images/AlexanWestEnd_Logo_White.png" style="width: 350px; max-width: 100%; height: auto;">
     </div>
+ 
+    <!-- 1. Hidden Studio AR Model -->
+    <model-viewer
+        id="reveal" 
+        src="Models/Studio_test-optimized.glb?sound=Sound/AR Audio Mix_S1_final.mp3" 
+        ar
+        ar-modes="scene-viewer webxr quick-look" 
+        ios-src="Models/GIRL_converted.usdz"
+        ar-placement="floor"
+        camera-orbit="45deg 75deg 105%"
+        rotation="0 1.75 0" 
+        interaction-prompt="none">
+    </model-viewer>
 
-    <!-- Hidden Main Page AR Model -->
-    <model-viewer id="reveal" 
-    src="Models/Studio_test-optimized.glb?sound=Sound/AR Audio Mix_S1_final.mp3" 
-    ar ar-modes="scene-viewer webxr quick-look" 
-    ios-src="Models/GIRL_converted.usdz"
-    ar-placement="floor"
-    camera-orbit="45deg 75deg 105%"
-    rotation="0 1.75 0" 
-    interaction-prompt="none">
-</model-viewer>
+    <!-- 2. Hidden 1-Bedroom AR Model -->
+    <model-viewer
+        id="reveal-1bed" 
+        src="Models/1Bedroom_test-optimized.glb" 
+        ar
+        ar-modes="scene-viewer webxr quick-look" 
+        ios-src="Models/1Bedroom_converted.usdz"
+        ar-placement="floor"
+        camera-orbit="45deg 75deg 105%"
+        rotation="0 1.75 0" 
+        interaction-prompt="none">
+    </model-viewer>
 
+    <!-- 3. Hidden Meet Finley AR Model -->
+    <model-viewer
+        id="reveal-finley" 
+        src="Models/Finley_test-optimized.glb" 
+        ar
+        ar-modes="scene-viewer webxr quick-look" 
+        ios-src="Models/Finley_converted.usdz"
+        ar-placement="floor"
+        camera-orbit="45deg 75deg 105%"
+        rotation="0 1.75 0" 
+        interaction-prompt="none">
+    </model-viewer>
+ 
     <h1 class="hunt-header">LEASE NOW</h1>
     <p style="text-align:center; font-family: 'Classico'; font-weight: bold; color: #EDE9E5; font-size: 14px;">Make sure Wi-Fi and sound is on!</p>
-
+ 
     <div style="position: relative; width: 100%;">
         <video id="video-overlay" style="width: 100%;" poster="images/Michael - Demo_isabel.png" playsinline muted>
             <source src="Video/Michael - Demo_isabel.mp4" type="video/mp4">
@@ -96,31 +132,32 @@
     </div>
     
     <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-        <button id="ar-button" class="main-button">
+        <!-- Studio Model Button -->
+        <button id="ar-button-studio" class="main-button">
             <img src="images/AR Icon 1.png">
             <span style="font-size: 18px; color: #571B25; font-family: 'ChronicleDeck-Semibold';"><strong>Walk Studio Model in AR</strong></span>
         </button>
 
-         <button id="ar-button" class="main-button">
+        <!-- 1-Bedroom Model Button -->
+        <button id="ar-button-1bed" class="main-button">
             <img src="images/AR Icon 1.png">
             <span style="font-size: 18px; color: #571B25; font-family: 'ChronicleDeck-Semibold';"><strong>Walk 1-Bedroom Model in AR</strong></span>
         </button>
-        
-        <!--<button id="record-mission-button" class="main-button" onclick="openRecordingTab()">
-            <img src="images/Pink_Play.png">
-            <span style="font-size: 18px; color: #571B25; font-family: 'ChronicleDeck-Semibold';"><strong>record project</strong></span>
-        </button> -->
 
+        <!-- Meet Finley Button -->
+        <button id="ar-button-finley" class="main-button">
+            <img src="images/AR Icon 1.png">
+            <span style="font-size: 18px; color: #571B25; font-family: 'ChronicleDeck-Semibold';"><strong>Meet Finley in AR</strong></span>
+        </button>
+ 
+        <!-- Coupon Button -->
         <button id="viewPrintCertificateButton" class="main-button">
             <img src="images/Ticket Icon_1.png" style="opacity: 0.8;">
             <span style="font-size: 18px; color: #571B25; font-family: 'ChronicleDeck-Semibold';"><strong>Recieve VIP Coupon</strong></span>
         </button>
     </div>
-
-    <!--<p style="text-align:center; font-family: 'Chalet LondonNineteenEighty Regular'; font-weight: bold; color: #ff69b4; font-size: 14px;">have your grown-up supervise your "kindness projects".</p> -->
-    
+ 
     <div class="card" style="margin-top: 20px;">
-        <!--<img src="images/erin_video_scenes-34.png" style="width: 300px; max-width: 90%; margin-bottom: 10px;"> -->
         <h2><p style="font-family:'Classico'; color: #E69D6C; font-size: 20px;"><b>See:</b><a href="https://alexanwestend.com/floor-plans/" target="_blank"> Floor Plans</a></p></h2>
         <h2><p style="font-family:'Classico'; color: #E69D6C; font-size: 20px;"><b>Explore:</b><a href="https://alexanwestend.com/floor-plans/map/" target="_blank"> Interactive Map</a></p></h2>
         <h2><p style="font-family:'Classico'; color: #E69D6C; font-size: 20px;"><b>Discovery:</b><a href="https://alexanwestend.com/amenities/" target="_blank"> Resort Amenities</a></p></h2>
@@ -132,78 +169,33 @@
     </div>
     
     <button onclick="window.open('https://alexanwestend.com/', '_blank')" style="background-color: #E69D6C; border-radius: 8px; border: 2px solid #E69D6C; height: 35px; color: #571B25; font-size: 18px; font-family: 'ChronicleDeck-Semibold'; margin: 15px 0; cursor: pointer;"><strong> Is Here</strong></button>
-
+ 
     <div class="card">
-        <!--<h2 style="font-family:'ChronicleDeck-Semibold'; color: #E69D6C;">experience 4D Augmented Reality on your phone</h2> -->
         <img src="images/AR Instructions v4HDwht.png" style="width: 100%; max-width: 350px;">
         <h3 style="font-family:'Classico'; color: #E69D6C; font-size: 14px;"><em>If AR button does not appear on mobile, use another browser.</em></h3>
     </div>
+    
     <div class="card" style="margin-top: 20px;">
         <a href="https://avertek.net/" target="_blank"><p style="font-family:'Classico'; color:#E7CCB4; font-size: 14px;">Contact AVERtek to learn more about AR marketing.</p></a>
     </div>
 </div>
-
+ 
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script>
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-
+ 
 <script>
-    function openRecordingTab() {
-    const recWin = window.open("", "_blank");
-    recWin.document.write(`
-    <html><head><title>Project Recorder</title>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"><\/script>
-    <style>
-        body { margin: 0; background: #ffff99; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: sans-serif; text-align: center; padding: 10px; box-sizing: border-box; }
-        /* Focus strictly on 2D view */
-        model-viewer { width: 100%; height: 50vh; --progress-bar-color: #59cbe8; background-color: #ffff99; }
-        .instr { background: white; padding: 15px 25px; border-radius: 12px; border: 3px solid #59cbe8; width: 95%; max-width: 600px; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; }
-        .instr p { font-size: 18px; font-weight: bold; color: #ff69b4; margin: 8px 0; display: flex; align-items: center; justify-content: center; }
-        .play-btn { display: inline-block !important; min-width: 250px; height: 60px; background: #59cbe8; color: white; border-radius: 10px; font-size: 22px; font-weight: bold; border: none; cursor: pointer; margin-top: 15px; padding: 0 40px; line-height: 60px; }
-        .rec-img { height: 24px; vertical-align: middle; margin-left: 8px; }
-    </style></head>
-    <body>
-        <model-viewer id="m" 
-            src=" Models/entire_family_99cm.glb" 
-            poster="images/Poster_SN_Scene.png" 
-            reveal="auto" loading="eager" interaction-prompt="none" camera-controls>
-        </model-viewer>
-        <audio id="music" src="Sound/sweet_neighbor_of_mine3.mp3" loop></audio>
-        <div class="instr">
-            <p>SCREEN RECORD iOS: Swipe down top-right & tap <img src="images/iPhone Record Button 9.png" class="rec-img"></p>
-            <p>ANDROID: Swipe down twice & tap "Screen Record"</p>
-            <button id="ctrl" class="play-btn" onclick="
-                const a=document.getElementById('music'); 
-                const m=document.getElementById('m'); 
-                if(a.paused){
-                    a.play(); 
-                    m.play(); 
-                    m.dismissPoster();
-                    this.innerText='  ❚❚   PAUSE'; 
-                    this.style.background='#ff69b4';
-                } else {
-                    a.pause(); 
-                    m.pause(); 
-                    this.innerText='  ▶   START SHOW'; 
-                    this.style.background='#59cbe8';
-                }
-            ">  ▶   START SHOW</button>
-        </div>
-    </body></html>`);
-    recWin.document.close();
-}
     document.addEventListener("DOMContentLoaded", function () {
         const video = document.getElementById('video-overlay');
         const playBtn = document.getElementById('play-pause-button');
-        const mv = document.getElementById('reveal');
-
+ 
         function toggleVideo() {
             if (video.paused) { video.play(); video.muted = false; playBtn.style.display = "none"; }
             else { video.pause(); playBtn.style.display = "block"; }
         }
-
+ 
         playBtn.addEventListener('click', toggleVideo);
         video.addEventListener('click', toggleVideo);
-
+ 
         function openPdfInNewTab(blob, certificateNumber) {
             const url = URL.createObjectURL(blob);
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -219,7 +211,7 @@
                 if (!newWindow) alert('Please allow pop-ups to view the certificate.');
             }
         }
-
+ 
         document.getElementById('viewPrintCertificateButton').addEventListener('click', async () => {
             const { PDFDocument, rgb, StandardFonts } = PDFLib;
             try {
@@ -235,24 +227,36 @@
                 const exp = new Date(); exp.setDate(now.getDate() + 31);
                 const expStr = exp.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
                 const certNo = Date.now().toString().slice(-8);
-
+ 
                 const x = 80; const baseY = height - 250;
                 page.drawText("Tercek Real Estate Group", { x, y: baseY + 20, size: 16, font: fontB, color: rgb(8/255, 119/255, 144/255) });
                 page.drawText("Sweet Neighbor of Mine", { x, y: baseY, size: 16, font: fontB, color: rgb(254/255, 63/255, 178/255) });
                 page.drawText(`Certificate No: ${certNo}`, { x, y: baseY - 20, size: 12, font: fontR, color: rgb(8/255, 119/255, 144/255) });
                 page.drawText(`Download Date: ${dateStr}`, { x, y: baseY - 40, size: 12, font: fontR, color: rgb(8/255, 119/255, 144/255) });
                 page.drawText(`Valid until: ${expStr}`, { x, y: baseY - 60, size: 14, font: fontB, color: rgb(0.8, 0.2, 0.2) });
-
+ 
                 const pdfData = await pdfDoc.save();
                 openPdfInNewTab(new Blob([pdfData], { type: 'application/pdf' }), certNo);
             } catch (e) { alert("Error loading certificate template."); }
         });
 
-        document.getElementById('ar-button').addEventListener('click', () => {
-            if (mv.canActivateAR) { mv.activateAR(); } 
-            else { alert("AR features require a mobile device."); }
-        });
+        // Helper function to handle AR activation across all models
+        function triggerAR(modelViewerId) {
+            const mv = document.getElementById(modelViewerId);
+            if (mv && mv.canActivateAR) {
+                mv.activateAR();
+            } else {
+                alert("AR features require a mobile device.");
+            }
+        }
+
+        // Attach listeners for each AR experience button
+        document.getElementById('ar-button-studio').addEventListener('click', () => triggerAR('reveal'));
+        document.getElementById('ar-button-1bed').addEventListener('click', () => triggerAR('reveal-1bed'));
+        document.getElementById('ar-button-finley').addEventListener('click', () => triggerAR('reveal-finley'));
     });
 </script>
 </body>
 </html>
+
+```
